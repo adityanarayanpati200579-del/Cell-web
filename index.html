@@ -1,312 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2563eb">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Placement Verification Portal</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">P</div>
-        <div class="brand-copy">
-          <strong>Placement Portal</strong>
-          <span>Test Environment</span>
+  <header class="topbar">
+    <div class="brand">Placement Portal</div>
+    <nav>
+      <button class="nav-btn active" data-section="create">Create Placement</button>
+      <button class="nav-btn" data-section="criteria">Registration Verification</button>
+      <button class="nav-btn" data-section="applications">Application Verification</button>
+    </nav>
+    <button class="logout">↪ Logout</button>
+  </header>
+
+  <main class="container">
+    <!-- CREATE PLACEMENT -->
+    <section id="create" class="section active">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Coordinator</p>
+          <h1>Create New Placement Link</h1>
+          <p class="muted">Create a company-specific application and eligibility link.</p>
         </div>
       </div>
 
-      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
-
-      <div class="nav-backdrop" id="navBackdrop"></div>
-      <nav class="main-nav" id="mainNav">
-        <div class="mobile-nav-header">
-          <strong>Menu</strong>
-          <button id="closeMenu">×</button>
-        </div>
-
-        <button class="nav-btn active" data-section="dashboard">Dashboard</button>
-        <button class="nav-btn coordinator-only" data-section="create">Create Placement</button>
-        <button class="nav-btn coordinator-only" data-section="registration">Registration Verification</button>
-        <button class="nav-btn coordinator-only" data-section="applications">Application Verification</button>
-        <button class="nav-btn student-only" data-section="student">Available Companies</button>
-      </nav>
-
-      <button id="switchRole" class="role-switch">Switch to Student View</button>
-    </header>
-
-    <main class="container">
-
-      <!-- DASHBOARD -->
-      <section id="dashboard" class="section active">
-        <div class="page-heading hero">
-          <div>
-            <p class="eyebrow" id="roleEyebrow">Coordinator View</p>
-            <h1 id="dashboardTitle">Placement Management Dashboard</h1>
-            <p class="muted" id="dashboardText">Create companies, add unlimited test students, and verify applications.</p>
-          </div>
-          <span class="role-pill" id="rolePill">COORDINATOR</span>
-        </div>
-
-        <div class="stats">
-          <div class="stat-card"><span>Companies</span><strong id="statCompanies">0</strong></div>
-          <div class="stat-card"><span>Students</span><strong id="statStudents">0</strong></div>
-          <div class="stat-card"><span>Applications</span><strong id="statApplications">0</strong></div>
-          <div class="stat-card"><span>Verified</span><strong id="statVerified">0</strong></div>
-        </div>
-
-        <div class="quick-grid">
-          <button class="quick-card coordinator-only" onclick="showSection('create')">
-            <span class="quick-icon">＋</span>
-            <span><b>Create Placement</b><small>Create a company and eligibility criteria.</small></span>
-          </button>
-          <button class="quick-card coordinator-only" onclick="showSection('registration')">
-            <span class="quick-icon">✓</span>
-            <span><b>Registration Verification</b><small>Review student registrations.</small></span>
-          </button>
-          <button class="quick-card student-only" onclick="showSection('student')">
-            <span class="quick-icon">→</span>
-            <span><b>Apply as Student</b><small>Add unlimited test student records.</small></span>
-          </button>
-        </div>
-      </section>
-
-      <!-- CREATE PLACEMENT -->
-      <section id="create" class="section">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">Coordinator</p>
-            <h1>Create New Placement Link</h1>
-            <p class="muted">Companies created here instantly appear in Student View.</p>
-          </div>
-        </div>
-
-        <div class="card form-card">
-          <div class="form-grid">
-            <label>Company Name *
-              <input id="companyName" type="text" placeholder="e.g. Deloitte">
-            </label>
-            <label>Eligible Batch
-              <select id="batch">
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
-                <option value="2029">2029</option>
-                <option value="All">All Batches</option>
-              </select>
-            </label>
-            <label>Minimum 10th %
-              <input id="cg10" type="number" min="0" max="100" step="0.01" value="0">
-            </label>
-            <label>Minimum 12th %
-              <input id="cg12" type="number" min="0" max="100" step="0.01" value="0">
-            </label>
-            <label>Minimum CGPA
-              <input id="cgpa" type="number" min="0" max="10" step="0.01" value="0">
-            </label>
-            <label>Eligible Branches
-              <select id="branches" multiple>
-                <option value="All" selected>All Branches</option>
-                <option value="EE">Electrical Engineering (EE)</option>
-                <option value="CSE">Computer Science (CSE)</option>
-                <option value="IT">Information Technology (IT)</option>
-                <option value="E&I">Electronics & Instrumentation (E&I)</option>
-              </select>
-              <small>On mobile, tap and hold to select multiple branches.</small>
-            </label>
-          </div>
-
-          <div class="additional">
-            <h3>Additional Criteria / Details</h3>
-            <div class="inline-form">
-              <input id="extraField" type="text" placeholder="e.g. No active backlogs">
-              <button class="secondary" id="addExtra">+ Add</button>
-            </div>
-            <div id="extraList" class="tag-list"></div>
-          </div>
-
-          <button class="primary create-btn" id="createPlacement">Create Placement Link</button>
-        </div>
-
-        <div class="subheading">
-          <div>
-            <h2>Created Companies</h2>
-            <p class="muted">Manage and open verification for each company.</p>
-          </div>
-          <button class="secondary" id="clearTestData">Clear All Test Data</button>
-        </div>
-        <div class="placement-list" id="placementList"></div>
-      </section>
-
-      <!-- REGISTRATION VERIFICATION -->
-      <section id="registration" class="section">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">Coordinator</p>
-            <h1>Registration Verification</h1>
-            <p class="muted">Review students registered for a selected company.</p>
-          </div>
-        </div>
-
-        <div class="card filters">
-          <label>Company
-            <select id="companyFilter"></select>
+      <div class="card form-card">
+        <div class="form-grid">
+          <label>Company Name
+            <input id="companyName" type="text" placeholder="e.g. Deloitte" />
           </label>
-          <label>Search Student
-            <input id="searchStudent" type="search" placeholder="Name or email">
+
+          <label>Criteria / CGPA
+            <input id="cgpaCriteria" type="number" min="0" max="10" step="0.01" placeholder="e.g. 7.5" />
           </label>
-          <label>Status
-            <select id="filterStatus">
-              <option value="All">All</option>
-              <option value="Verified">Verified</option>
-              <option value="Pending">Pending</option>
-              <option value="Rejected">Rejected</option>
+
+          <label>10th Percentage
+            <input id="tenthCriteria" type="number" min="0" max="100" placeholder="e.g. 65" />
+          </label>
+
+          <label>12th Percentage
+            <input id="twelfthCriteria" type="number" min="0" max="100" placeholder="e.g. 65" />
+          </label>
+
+          <label>Eligible Branches
+            <select id="branches" multiple>
+              <option value="All" selected>All Branches</option>
+              <option value="EE">Electrical Engineering</option>
+              <option value="CSE">Computer Science</option>
+              <option value="IT">Information Technology</option>
+              <option value="E&I">Electronics & Instrumentation</option>
+            </select>
+            <small>Use Ctrl/Cmd to select multiple branches.</small>
+          </label>
+
+          <label>Eligible Batch
+            <select id="batch">
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
             </select>
           </label>
         </div>
 
-        <div class="card table-card">
-          <div class="table-header">
-            <div>
-              <h2>Registered Students</h2>
-              <span id="eligibleCount" class="muted"></span>
-            </div>
-            <div class="button-row">
-              <button class="secondary" id="rejectSelected">Reject Selected</button>
-              <button class="primary" id="verifySelected">Verify Selected</button>
-            </div>
+        <div class="additional">
+          <h3>Additional Details</h3>
+          <div class="inline-form">
+            <input id="extraField" type="text" placeholder="e.g. Internship required / no active backlogs" />
+            <button class="secondary" id="addExtra">+ Add</button>
           </div>
-
-          <div class="responsive-table">
-            <table>
-              <thead>
-                <tr>
-                  <th><input id="selectAll" type="checkbox"></th>
-                  <th>Name</th><th>Email</th><th>10th</th><th>12th</th>
-                  <th>CGPA</th><th>Branch</th><th>Batch</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="studentBody"></tbody>
-            </table>
-          </div>
+          <div id="extraList" class="tag-list"></div>
         </div>
-      </section>
 
-      <!-- APPLICATION VERIFICATION -->
-      <section id="applications" class="section">
-        <div class="page-heading">
+        <button class="primary create-btn" id="createPlacement">Create Placement</button>
+      </div>
+
+      <div class="placement-list" id="placementList"></div>
+    </section>
+
+    <!-- REGISTRATION VERIFICATION -->
+    <section id="criteria" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Verification</p>
+          <h1>Registration Verification</h1>
+          <p class="muted">Select a company and verify students against its criteria.</p>
+        </div>
+        <button class="secondary" id="backCreate">← Back</button>
+      </div>
+
+      <div class="card filters">
+        <label>Company
+          <select id="companyFilter"></select>
+        </label>
+        <label>10th ≥
+          <input id="filter10" type="number" placeholder="Any" />
+        </label>
+        <label>12th ≥
+          <input id="filter12" type="number" placeholder="Any" />
+        </label>
+        <label>CGPA ≥
+          <input id="filterCgpa" type="number" step="0.01" placeholder="Any" />
+        </label>
+        <label>Branch
+          <select id="filterBranch">
+            <option value="All">All</option>
+            <option value="EE">EE</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="E&I">E&I</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="card table-card">
+        <div class="table-header">
           <div>
-            <p class="eyebrow">Coordinator</p>
-            <h1>Application Verification</h1>
-            <p class="muted">Final review of all company applications.</p>
+            <h2>Eligible Students</h2>
+            <span id="eligibleCount" class="muted"></span>
           </div>
+          <button class="primary" id="verifySelected">Verify Selected</button>
         </div>
-
-        <div class="card table-card">
-          <div class="table-header">
-            <div>
-              <h2>All Applications</h2>
-              <span class="muted" id="applicationCount"></span>
-            </div>
-            <button class="primary" id="verifyAll">Verify All Pending</button>
-          </div>
-
-          <div class="responsive-table">
-            <table>
-              <thead>
-                <tr><th>Name</th><th>Company</th><th>Branch</th><th>Batch</th><th>CGPA</th><th>Status</th><th>Action</th></tr>
-              </thead>
-              <tbody id="applicationBody"></tbody>
-            </table>
-          </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><input id="selectAll" type="checkbox" /></th>
+                <th>Name</th><th>10th</th><th>12th</th><th>CGPA</th><th>Branch</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="studentBody"></tbody>
+          </table>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- STUDENT VIEW -->
-      <section id="student" class="section">
-        <div class="page-heading student-heading">
+    <!-- APPLICATION VERIFICATION -->
+    <section id="applications" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Final Check</p>
+          <h1>Application Verification</h1>
+          <p class="muted">Review and manually verify applications before forwarding the database.</p>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <div class="table-header">
           <div>
-            <p class="eyebrow">Student View</p>
-            <h1>Available Placement Opportunities</h1>
-            <p class="muted">Select a company and add as many test student applications as you need.</p>
+            <h2>Application Status</h2>
+            <span class="muted">Unverified applications are highlighted for manual review.</span>
           </div>
-          <span class="test-badge">TEST MODE • UNLIMITED ENTRIES</span>
+          <button class="primary" id="verifyAll">Verify All</button>
         </div>
-
-        <div id="studentCompanies" class="student-company-grid"></div>
-
-        <div id="studentFormArea" class="card student-form-card hidden">
-          <div class="form-title">
-            <div>
-              <p class="eyebrow">Application Form</p>
-              <h2 id="studentFormCompany">Company</h2>
-              <p id="studentCriteriaSummary" class="muted"></p>
-            </div>
-            <button class="secondary" id="closeStudentForm">Close</button>
-          </div>
-
-          <div class="form-grid">
-            <label>Student Name *
-              <input id="studentName" type="text" placeholder="Enter student name">
-            </label>
-            <label>Email *
-              <input id="studentEmail" type="email" placeholder="student@example.com">
-            </label>
-            <label>Phone
-              <input id="studentPhone" type="tel" inputmode="numeric" placeholder="9876543210">
-            </label>
-            <label>10th Percentage *
-              <input id="student10" type="number" min="0" max="100" step="0.01" placeholder="84.33">
-            </label>
-            <label>12th Percentage *
-              <input id="student12" type="number" min="0" max="100" step="0.01" placeholder="91.33">
-            </label>
-            <label>CGPA *
-              <input id="studentCgpa" type="number" min="0" max="10" step="0.01" placeholder="8.37">
-            </label>
-            <label>Branch *
-              <select id="studentBranch">
-                <option value="EE">Electrical Engineering (EE)</option>
-                <option value="CSE">Computer Science (CSE)</option>
-                <option value="IT">Information Technology (IT)</option>
-                <option value="E&I">Electronics & Instrumentation (E&I)</option>
-              </select>
-            </label>
-            <label>Batch *
-              <select id="studentBatch">
-                <option value="2027">2027</option>
-                <option value="2028">2028</option>
-                <option value="2029">2029</option>
-              </select>
-            </label>
-          </div>
-
-          <div id="liveEligibility" class="eligibility-box"></div>
-          <button class="primary create-btn" id="submitStudent">Submit Student Application</button>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Company</th><th>Branch</th><th>CGPA</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody id="applicationBody"></tbody>
+          </table>
         </div>
-
-        <div class="card my-applications">
-          <div class="table-header">
-            <div>
-              <h2>Test Applications Added</h2>
-              <span class="muted">Saved locally in this browser.</span>
-            </div>
-            <span class="counter" id="studentApplicationCount">0</span>
-          </div>
-
-          <div class="responsive-table">
-            <table>
-              <thead>
-                <tr><th>Name</th><th>Company</th><th>Branch</th><th>Batch</th><th>CGPA</th><th>Status</th></tr>
-              </thead>
-              <tbody id="studentApplicationsBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </section>
+  </main>
 
   <div id="toast" class="toast"></div>
   <script src="script.js"></script>
